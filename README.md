@@ -2,8 +2,11 @@
 
 Machine Learning model to generate Tags for Machine Learning related articles. This model is a fine-tuned version of [t5-small](https://huggingface.co/t5-small) fine-tuned on a refined version of [190k Medium Articles](https://www.kaggle.com/datasets/fabiochiusano/medium-articles) dataset for generating Machine Learning article tags using the article textual content as input. While usually formulated as a multi-label classification problem, this model deals with _tag generation_ as a text2text generation task (inspiration and reference: [fabiochiu/t5-base-tag-generation](https://huggingface.co/fabiochiu/t5-base-tag-generation)).
 <br><br>
+HuggingFace Model Page: [nandakishormpai/t5-small-machine-articles-tag-generation](https://huggingface.co/nandakishormpai/t5-small-machine-articles-tag-generation)<br><br>
 Finetuning Notebook Reference: [Hugging face summarization notebook](https://github.com/huggingface/notebooks/blob/main/examples/summarization.ipynb).
-##  How to use the model
+<details open>
+<summary> <h2>  How to use the Generator </h2> </summary>
+
 ### Installations
 
 ```python
@@ -40,7 +43,7 @@ inputs = tokenizer([article_text], max_length=1024, truncation=True, return_tens
 output = model.generate(**inputs, num_beams=8, do_sample=True, min_length=10,
                         max_length=128)
 
-decoded_output = tokenizer.batch_decode(output, skip_special_tokens=True)[0]
+decoded_output =## tokenizer.batch_decode(output, skip_special_tokens=True)[0]
 
 tags = [ tag.strip() for tag in decoded_output.split(",")] 
 
@@ -50,9 +53,11 @@ print(tags)
 
 
 ```
+</details>
 
+<details>
 
-## Dataset Preparation
+<summary> <h2> Dataset Preparation </h2> </summary>
 
 Over the 190k article dataset from Kaggle, around 12k of them are Machine Learning based and the tags were pretty high level. 
 Generating more specific tags would be of use while developing a system for Technical Blog Platforms. 
@@ -60,6 +65,11 @@ ML Articles were filtered out and around 1000 articles were sampled. GPT3 API wa
 
 #### Notebook : [/ML_Articles_Dataset_Generation_GPT3](https://github.com/nandakishormpai/AI-Article-Tag-Genertor-t5-small/blob/main/ML_Articles_Dataset_Generation_GPT3.ipynb)
 
+</details>
+
+## Fine-tuning t5-small
+
+[Fine-tuning notebook](https://github.com/nandakishormpai/AI-Article-Tag-Genertor-t5-small/blob/main/ML_Articles_Tag_generation_t5_small_Finetuning.ipynb)
 
 ## Intended uses & limitations
 
@@ -67,7 +77,7 @@ This model can be used to generate Tags for Machine Learning articles primarily 
 
 ## Results
 
-It achieves the following results on the evaluation set:
+It achieves t##he following results on the evaluation set:
 - Loss: 1.8786
 - Rouge1: 35.5143
 - Rouge2: 18.6656
